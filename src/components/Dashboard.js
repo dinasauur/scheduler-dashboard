@@ -28,7 +28,10 @@ const data = [
 ];
 
 class Dashboard extends Component {
-  state = { loading: false };
+  state = { 
+    loading: false,
+    focused: null
+   };
 
   render() {
     const dashboardClasses = classnames('dashboard');
