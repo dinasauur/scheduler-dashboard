@@ -34,11 +34,24 @@ class Dashboard extends Component {
     focused: null 
   };
 
-  // Instance method
+  // Instance method the long way
   selectPanel(id) {
     this.setState({
       focused: id
     });
+
+    if (this.state.focused === id) {
+      this.setState({
+        focused: null
+      })
+    }
+  }
+
+   // Instance method the short way
+   selectPanel(id) {
+    this.setState(previousState => ({
+      focused: previousState.focused !== null ? null : id
+    }));
   }
 
   // /* Class Property with Arrow Function */
