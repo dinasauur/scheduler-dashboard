@@ -28,9 +28,17 @@ const data = [
 ];
 
 class Dashboard extends Component {
+  // inital state
   state = { 
     loading: false,
-    focused: null };
+    focused: null 
+  };
+
+  selectPanel(id) {
+    this.setState({
+      focused: id
+    });
+  }
 
   render() {
     const dashboardClasses = classnames('dashboard', {
@@ -47,7 +55,7 @@ class Dashboard extends Component {
         key={panel.id} 
         id={panel.id} 
         label={panel.label} 
-        value={panel.value} 
+        value={panel.value}
       />
     ));
 
