@@ -34,18 +34,37 @@ class Dashboard extends Component {
     focused: null 
   };
 
-  // Instance method the long way
-  selectPanel(id) {
-    this.setState({
-      focused: id
-    });
+  // We use the componentDidMount lifecycle method to check to see if there is saved focus state after we render the application the first time.
+  // When the local storage contains state, we can set the state of the application to match.
+  componentDidMount() {
+    const focused = JSON.parse(localStorage.getItem("focused"));
 
-    if (this.state.focused === id) {
-      this.setState({
-        focused: null
-      })
+    if (focused) {
+      this.setState({ focused });
     }
   }
+
+  // We can use the componentDidUpdate lifecycle method to listen for changes to the state. These functions belong to the Dashboard class. 
+  // The componentDidUpdate lifecycle method has access to the props and state from the previous update. 
+  // We compare them to the existing state, and if the values change, we write the value to localStorage.
+  componentDidUpdate(previousProps, previousState) {
+    if (previousState.focused !== this.state.focused) {
+      localStorage.setItem("focused", JSON.stringify(this.state.focused));
+    }
+  }
+
+  // // Instance method the long way
+  // selectPanel(id) {
+  //   this.setState({
+  //     focused: id
+  //   });
+
+  //   if (this.state.focused === id) {
+  //     this.setState({
+  //       focused: null
+  //     })
+  //   }
+  // }
 
    // Instance method the short way
    selectPanel(id) {
