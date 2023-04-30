@@ -10,6 +10,7 @@ import {
   getMostPopularDay,
   getInterviewsPerDay,
 } from 'helpers/selectors';
+import { setInterview } from 'helpers/reducers';
 
 const data = [
   {
@@ -68,6 +69,19 @@ class Dashboard extends Component {
 
     // makes this dashboard update in realtime. We will add a WebSocket connection that can update the state when we book or cancel an interview.
     this.socket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
+
+    // The last step is to listen for messages on the socket connection and use them to update the state when we book or cancel an interview.
+    // This event handler converts the string data to JavaScript data types. If the data is an object with the correct type, then we update the state.
+    // We use a setInterview helper function to convert the state using the id and interview values.
+    this.socket.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+
+      if (typeof data === 'object' && data.type === 'SET_INTERVIEW') {
+        this.setState((previousState) =>
+          setInterview(previousState, data.id, data.interview)
+        );
+      }
+    };
   }
 
   // We can use the componentDidUpdate lifecycle method to listen for changes to the state. These functions belong to the Dashboard class.
