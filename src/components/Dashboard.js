@@ -30,8 +30,11 @@ const data = [
 class Dashboard extends Component {
   // inital state
   state = { 
-    loading: false,
-    focused: null 
+    loading: true,
+    focused: null,
+    days: [],
+    appointments: {},
+    interviewers: {}
   };
 
   // We use the componentDidMount lifecycle method to check to see if there is saved focus state after we render the application the first time.
